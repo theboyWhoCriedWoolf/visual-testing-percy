@@ -9,8 +9,4 @@ describe('<Button>', () => {
     await expect(page).toMatch('Hello');
     await percySnapshot(page, 'Button');
   });
-
-  it('New', async () => {
-    expect(true).toBe('true');
-  });
 });
