@@ -43,6 +43,11 @@ commands:
           paths:
             - dist
 
+  restore_workspace:
+    steps:
+      - attach_workspace:
+          at: *working_directory
+
   vrt_test:
     description: "Running Visual Regression Tests"
     steps:
