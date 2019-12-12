@@ -7,7 +7,7 @@ export const routePath = '/Button';
 export const component = () => (
   <Suite>
     <Spec label="Default">
-      <Button>Hello world</Button>
+      <Button>A label text</Button>
     </Spec>
   </Suite>
 );
