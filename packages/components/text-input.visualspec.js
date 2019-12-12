@@ -6,7 +6,7 @@ describe('<Button>', () => {
   });
 
   it('Default', async () => {
-    await expect(page).toMatch('Hello');
+    await expect(page).toMatch('A label text');
     await percySnapshot(page, 'Button');
   });
 });

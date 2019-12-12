@@ -4,6 +4,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const isDev = process.env.NODE_ENV === 'development';
+
 // Ensure UI Kit build (ui-kit.esm.js) exists
 // and warn in case it is old.
 const info = (() => {
@@ -14,7 +16,7 @@ const info = (() => {
   }
 })();
 
-if (!info) {
+if (!info && !isDev) {
   // We can only start ui-kit when it was built first
   console.info(
     '\x1b[33m%s\x1b[0m', // log in yellow
@@ -22,8 +24,6 @@ if (!info) {
   );
   process.exit(0);
 }
-
-const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
   target: 'web',
