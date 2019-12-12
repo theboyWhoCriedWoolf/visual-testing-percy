@@ -72,12 +72,6 @@ jobs:
     steps:
       - install_dependencies
       - build_artifacts
-      - save_workspace
-  vrt_test:
-    executor: node_10
-    steps:
-      - install_dependencies
-      - restore_workspace
       - vrt_test
 
 workflows:
@@ -88,6 +82,3 @@ workflows:
           filters:
             tags:
               only: /v[\.0-9]+.*/
-      - vrt_test:
-          requires:
-            - build
