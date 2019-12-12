@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export default styled.button`
-  background: green;
+  background: orange;
   color: white;
   padding: 20px;
 `;
