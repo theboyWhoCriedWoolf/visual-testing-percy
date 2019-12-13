@@ -69,7 +69,7 @@
     "visual-testing-app:serve": "yarn visual-testing-app:build && cross-env NODE_ENV=production node visual-testing-app/server.js",
     "visual-test": "cross-env NODE_ENV=development node visual-testing-app/server.js",
     "test:visual": "jest --config jest.visual.config.js --runInBand",
-    "percy": "percy exec -- yarn test:visual",
+    "percy": "percy exec -- jest --config jest.visual.config.js --runInBand",
     "build:components": "cross-env NODE_ENV=production rollup -c"
   }
 }
