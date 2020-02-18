@@ -77,7 +77,7 @@ commands:
       
       - run:
           name: Bulding visual testing app
-          command: yarn visual-testing-app:build
+          command: yarn visual-test:build
       - run: ./scripts/run-percy.sh
 
 jobs:
