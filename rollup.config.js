@@ -53,7 +53,7 @@ const defaultExternal = deps.concat(peerDeps);
 // further customized.
 const config = [
   {
-    input: 'packages/components/index.js',
+    input: 'packages/design-system/index.js',
     external: defaultExternal,
     output: {
       file: pkg.main,
@@ -62,7 +62,7 @@ const config = [
     plugins: configureRollupPlugins(),
   },
   {
-    input: 'packages/components/index.js',
+    input: 'packages/design-system/index.js',
     external: defaultExternal,
     output: {
       file: pkg.module,

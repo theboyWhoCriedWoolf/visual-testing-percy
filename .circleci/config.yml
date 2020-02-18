@@ -1,37 +1,47 @@
 version: 2.1
 
+orbs:
+ percy: percy/agent@0.1.2
+
+
 aliases:
-  - &working_directory ~/repo
+  - &working_directory ~/visual-testing
 
   - &restore_yarn_cache
-    name: "Restoring yarn cache"
-    keys:
-      - v2-dependencies-{{ checksum "package.json" }}
-      - v2-dependencies-
+    restore_cache:
+      name: 'Restoring yarn cache'
+      keys:
+        - v1-yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        - v1-yarn-cache-{{ .Branch }}
+        - v1-yarn-cache
 
   - &save_yarn_cache
-    name: "Saving yarn cache"
-    key: v2-dependencies-{{ checksum "package.json" }}
-    paths:
-      - node_modules
+    save_cache:
+      name: 'Saving yarn cache'
+      key: v1-yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      paths: 
+        - ~/.cache/yarn
+  
+  - &run_yarn
+    run: yarn --frozen-lockfile
+
 
 executors:
-  node_10:
+  node_13:
     docker:
-      - image: circleci/node:13.1
+      - image: circleci/node:13.2
     working_directory: *working_directory
 
 commands:
-  install_dependencies:
-    description: "Installing dependencies"
+  setup_dependencies:
+    description: Installing dependencies
     steps:
       - checkout
-      - restore_cache: *restore_yarn_cache
-      - run: yarn install --frozen-lockfile
-      - save_cache: *save_yarn_cache
+      - *restore_yarn_cache
+      - *run_yarn
 
-  build_artifacts:
-    description: "Building artifacts"
+  build_packages:
+    description: Building packages
     steps:
       - run: yarn build
 
@@ -64,30 +74,31 @@ commands:
             libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
             libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
             ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget --fix-missing
+      
+      - run:
+          name: Bulding visual testing app
+          command: yarn visual-test:build
       - run: ./scripts/run-percy.sh
 
 jobs:
-  build:
-    executor: node_10
+  build_lint_and_test:
+    parallelism: 3
+    executor: node_13
     steps:
-      - install_dependencies
-      - build_artifacts
-      - save_workspace
-  vrt_test:
-    executor: node_10
-    steps:
-      - install_dependencies
-      - restore_workspace
+      - setup_dependencies
+      - *save_yarn_cache
+      - build_packages
       - vrt_test
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build:
+      - build_lint_and_test:
           filters:
             tags:
               only: /v[\.0-9]+.*/
-      - vrt_test:
+      
+      - percy/finalize_all:
           requires:
-            - build
+            - build_lint_and_test

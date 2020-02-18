@@ -66,8 +66,6 @@ const Props = ({ children }) => {
   const node = Children.only(children);
   const propEntries = Object.entries(node.props);
 
-  console.error('node.type ', node);
-
   return (
     <PropList>
       {propEntries

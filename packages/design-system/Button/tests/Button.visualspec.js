@@ -2,11 +2,11 @@ import { percySnapshot } from '@percy/puppeteer';
 
 describe('<Button>', () => {
   beforeAll(async () => {
-    await page.goto('http://localhost:3001/Button');
+    await page.goto(`${HOST}/Button`);
   });
 
-  it('Default', async () => {
-    await expect(page).toMatch('Hello');
+  test('Button', async () => {
+    await expect(page).toMatch('Simple Button');
     await percySnapshot(page, 'Button');
   });
 });

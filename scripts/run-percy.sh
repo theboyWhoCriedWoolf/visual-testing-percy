@@ -1,3 +1,8 @@
 #!/bin/bash
-
- yarn visual-testing-app:build && yarn percy --reporters jest-silent-reporter
+# skip percy builds when this is not a pull request or when it's not master
+if [[ -n $CIRCLE_PULL_REQUEST || ${CIRCLE_BRANCH} == 'master' ]]
+  then
+   yarn visual-test:build && yarn percy --reporters jest-silent-reporter
+else
+  echo 'Skipping percy build'
+fi
