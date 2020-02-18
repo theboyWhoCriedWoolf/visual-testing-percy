@@ -3,21 +3,23 @@ const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const pkg = require('../package.json');
 
 const isDev = process.env.NODE_ENV === 'development';
+const designSystemDir = isDev ? '../packages/design-system' : '..';
 
-// Ensure UI Kit build (ui-kit.esm.js) exists
+// Ensure Design System build (design-system.esm.js) exists
 // and warn in case it is old.
 const info = (() => {
   try {
-    return fs.statSync(path.resolve(__dirname, '../dist/ui-kit.esm.js'));
+    return fs.statSync(path.resolve(__dirname, `../${pkg.module}`));
   } catch (e) {
     return null;
   }
 })();
 
 if (!info && !isDev) {
-  // We can only start ui-kit when it was built first
+  // We can only start design-system when it was built first
   console.info(
     '\x1b[33m%s\x1b[0m', // log in yellow
     '⚠️  You need to run "yarn build" or "yarn build:watch" before starting the visual testing app!',
@@ -51,9 +53,9 @@ module.exports = {
           chunks: 'all',
           priority: -20,
         },
-        'ui-kit': {
-          test: /ui-kit.esm/,
-          name: 'ui-kit',
+        'design-system': {
+          test: /design-system.esm/,
+          name: 'design-system',
           chunks: 'all',
           priority: -15,
         },
@@ -65,7 +67,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: [/(node_modules)/, /(ui-kit.esm)/],
+        exclude: [/(node_modules)/, /(design-system.esm)/],
         use: {
           loader: 'babel-loader',
           query: {
@@ -74,10 +76,6 @@ module.exports = {
           },
         },
       },
-      //   {
-      //     test: /\.css$/,
-      //     use: ['style-loader', 'css-loader'],
-      //   },
     ],
   },
 
@@ -92,7 +90,7 @@ module.exports = {
   resolve: {
     alias: {
       '@test': path.resolve(__dirname, '../test'),
-      'ui-kit': path.resolve(__dirname, '..'),
+      'design-system': path.resolve(__dirname, designSystemDir),
     },
   },
 };

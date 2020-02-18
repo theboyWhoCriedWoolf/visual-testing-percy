@@ -1,5 +1,5 @@
 // const storybookStories = require.context('../../packages/components', true, /\.stories\.js$/);
-const percyStories = require.context('../../packages/components', true, /\.percy\.js$/);
+const percyStories = require.context('../../packages/design-system', true, /\.percy\.js$/);
 
 const allComponents = percyStories.keys().reduce((components, file) => {
   const Comp = percyStories(file);

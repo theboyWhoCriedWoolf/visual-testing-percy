@@ -4,4 +4,7 @@ module.exports = {
   moduleNameMapper: {
     '@test(.*)$': '<rootDir>/test/$1',
   },
+  globals: {
+    HOST: 'http://localhost:3001',
+  },
 };
