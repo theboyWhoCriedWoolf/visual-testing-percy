@@ -9,7 +9,7 @@ const backgroundColor = theme.variants('mode', 'variant', {
 });
 
 const colorTheme = theme.variants('mode', 'variant', {
-  default: { light: '#333333', dark: '#333333' },
+  default: { light: 'red', dark: '#333333' },
   primary: { light: 'white', dark: '#333333' },
   success: { light: 'white', dark: '#333333' },
   warning: { light: 'white', dark: '#333333' },
