@@ -2,17 +2,17 @@ import styled from 'styled-components';
 import theme from 'styled-theming';
 
 const backgroundColor = theme.variants('mode', 'variant', {
-  default: { light: '#2196f3' },
-  primary: { light: '#1769aa' },
-  success: { light: '#6fbf73' },
-  warning: { light: '#f44336' },
+  default: { light: '#2196f3', dark: '#2196f3' },
+  primary: { light: '#1769aa', dark: '#1769aa' },
+  success: { light: '#6fbf73', dark: '#6fbf73' },
+  warning: { light: '#f44336', dark: '#f44336' },
 });
 
 const colorTheme = theme.variants('mode', 'variant', {
-  default: { light: 'white' },
-  primary: { light: 'white' },
-  success: { light: 'white' },
-  warning: { light: 'white' },
+  default: { light: '#333333', dark: '#333333' },
+  primary: { light: 'white', dark: '#333333' },
+  success: { light: 'white', dark: '#333333' },
+  warning: { light: 'white', dark: '#333333' },
 });
 
 const Button = styled.button`
