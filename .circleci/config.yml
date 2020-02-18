@@ -95,10 +95,6 @@ workflows:
   build_and_test:
     jobs:
       - build:
-        filters:
-          tags:
-            only: /v[\.0-9]+.*/
-            
-      - percy/finalize_all:
-          requires:
-            - build
+          filters:
+            tags:
+              only: /v[\.0-9]+.*/
