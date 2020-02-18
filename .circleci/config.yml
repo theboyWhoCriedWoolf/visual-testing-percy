@@ -95,7 +95,3 @@ workflows:
           filters:
             tags:
               only: /v[\.0-9]+.*/
-      
-      - visual_reg_test:
-          requires:
-            - build_lint_and_test
