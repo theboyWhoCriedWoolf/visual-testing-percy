@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
- percy: percy/agent@0.1.2
-
 
 aliases:
   - &working_directory ~/visual-testing
@@ -99,6 +96,6 @@ workflows:
             tags:
               only: /v[\.0-9]+.*/
       
-      - percy/finalize_all:
+      - visual_reg_test:
           requires:
             - build_lint_and_test
