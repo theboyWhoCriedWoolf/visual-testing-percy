@@ -98,3 +98,7 @@ workflows:
           filters:
             tags:
               only: /v[\.0-9]+.*/
+      
+      - percy/finalize_all:
+          requires:
+            - build_lint_and_test
